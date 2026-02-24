@@ -1,0 +1,38 @@
+SELECT o.ocena, o.przedmiot, o.data_wystawienia FROM Oceny o JOIN Uczniowie u ON o.id_ucznia_fk = u.id_ucznia WHERE u.imie_ucznia = 'Jan' AND u.nazwisko_ucznia = 'Kowalski';
+
+SELECT u.imie_ucznia, u.nazwisko_ucznia FROM Uczniowie u JOIN Klasy k ON u.id_klasy_fk = k.id_klasy WHERE k.nazwa_klasy = '3T';
+
+SELECT n.imie_nauczyciela, n.nazwisko_nauczyciela
+FROM Uczniowie u
+JOIN Klasy k ON u.id_klasy_fk = k.id_klasy
+JOIN Nauczyciele n ON k.id_wychowawcy_fk = n.id_nauczyciela
+WHERE u.imie_ucznia = 'Anna' AND u.nazwisko_ucznia = 'Zielińska';
+
+SELECT u.imie_ucznia, u.nazwisko_ucznia, o.ocena, o.data_wystawienia FROM Oceny o JOIN Uczniowie u ON o.id_ucznia_fk = u.id_ucznia WHERE o.przedmiot = 'Matematyka';
+
+SELECT AVG(o.ocena) AS srednia_programowania FROM Oceny o JOIN Uczniowie u ON o.id_ucznia_fk = u.id_ucznia JOIN Klasy k ON u.id_klasy_fk = k.id_klasy WHERE o.przedmiot = 'Programowanie' AND k.nazwa_klasy = '3T';
+
+SELECT u.imie_ucznia, u.nazwisko_ucznia, k.nazwa_klasy FROM Uczniowie u JOIN Klasy k ON u.id_klasy_fk = k.id_klasy ORDER BY k.nazwa_klasy, u.nazwisko_ucznia;
+
+SELECT k.nazwa_klasy, n.nazwisko_nauczyciela FROM Klasy k JOIN Nauczyciele n ON k.id_wychowawcy_fk = n.id_nauczyciela;
+
+SELECT DISTINCT u.imie_ucznia, u.nazwisko_ucznia FROM Uczniowie u JOIN Oceny o ON u.id_ucznia = o.id_ucznia_fk WHERE o.ocena = 5;
+
+SELECT COUNT(u.id_ucznia) AS liczba_uczniow FROM Uczniowie u JOIN Klasy k ON u.id_klasy_fk = k.id_klasy JOIN Nauczyciele n ON k.id_wychowawcy_fk = n.id_nauczyciela WHERE n.nazwisko_nauczyciela = 'Nowak';
+
+SELECT DISTINCT o.przedmiot FROM Oceny o JOIN Uczniowie u ON o.id_ucznia_fk = u.id_ucznia WHERE u.imie_ucznia = 'Piotr' AND u.nazwisko_ucznia = 'Wiśniewski';
+
+SELECT DISTINCT u.imie_ucznia, u.nazwisko_ucznia FROM Uczniowie u JOIN Oceny o ON u.id_ucznia = o.id_ucznia_fk WHERE o.data_wystawienia = '2023-10-12';
+
+SELECT u.imie_ucznia, u.nazwisko_ucznia, MAX(o.ocena) AS najwyzsza_ocena FROM Uczniowie u LEFT JOIN Oceny o ON u.id_ucznia = o.id_ucznia_fk GROUP BY u.id_ucznia, u.imie_ucznia, u.nazwisko_ucznia;
+
+SELECT k.nazwa_klasy FROM Klasy k JOIN Uczniowie u ON k.id_klasy = u.id_klasy_fk GROUP BY k.id_klasy, k.nazwa_klasy HAVING COUNT(u.id_ucznia) >= 3;
+
+SELECT DISTINCT u.imie_ucznia, u.nazwisko_ucznia
+FROM Uczniowie u
+JOIN Klasy k ON u.id_klasy_fk = k.id_klasy
+JOIN Nauczyciele n ON k.id_wychowawcy_fk = n.id_nauczyciela
+JOIN Oceny o ON u.id_ucznia = o.id_ucznia_fk
+WHERE n.imie_nauczyciela = 'Ewa'
+  AND n.nazwisko_nauczyciela = 'Kowalska'
+  AND o.ocena = 5;

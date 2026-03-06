@@ -1,0 +1,46 @@
+SELECT d.nazwa_dzialu, p.imie, p.nazwisko
+FROM Dzialy d
+LEFT JOIN Pracownicy p
+    ON d.id_dzialu = p.id_dzialu_fk;
+
+
+SELECT d.*
+FROM Dzialy d
+LEFT JOIN Pracownicy p
+    ON d.id_dzialu = p.id_dzialu_fk
+WHERE p.id_pracownika IS NULL;
+
+
+SELECT p.imie, p.nazwisko, d.nazwa_dzialu
+FROM Pracownicy p
+LEFT JOIN Dzialy d
+    ON p.id_dzialu_fk = d.id_dzialu;
+
+
+SELECT u.imie,
+       u.nazwisko,
+       o.ocena
+FROM Uczniowie u
+LEFT JOIN Oceny o ON u.id = o.uczen_id;
+
+SELECT u.*
+FROM Uczniowie u
+LEFT JOIN Oceny o ON u.id = o.uczen_id
+WHERE o.id IS NULL;
+
+SELECT k.nazwa AS klasa,
+       n.imie,
+       n.nazwisko
+FROM Klasy k
+LEFT JOIN Nauczyciele n ON k.wychowawca_id = n.id;
+
+SELECT n.*
+FROM Nauczyciele n
+LEFT JOIN Klasy k ON n.id = k.wychowawca_id
+WHERE k.id IS NULL;
+
+SELECT d.nazwa AS dzial,
+       COUNT(p.id) AS liczba_pracownikow
+FROM Dzialy d
+LEFT JOIN Pracownicy p ON d.id = p.dzial_id
+GROUP BY d.id, d.nazwa;

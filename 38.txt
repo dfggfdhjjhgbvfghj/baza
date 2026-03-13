@@ -1,9 +1,0 @@
-SELECT a.pseudonim, g.nazwa_gatunku FROM artysci a LEFT JOIN gatunki g ON a.id_gatunku = g.id_gatunku;
-
-SELECT s.imie, s.kraj FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza WHERE o.data_odsluchu IS NULL;
-
-SELECT a.tytul_albumu, COUNT(o.id_odsluchu) FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu GROUP BY o.id_albumu;
-
-SELECT a.pseudonim, g.nazwa_gatunku FROM gatunki g RIGHT JOIN artysci a ON a.id_gatunku = g.id_gatunku;
-
-SELECT s.imie, a.tytul_albumu, ar.pseudonim FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza LEFT JOIN albumy a ON o.id_albumu = a.id_albumu LEFT JOIN artysci ar ON a.id_artysty = ar.id_artysty;

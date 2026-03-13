@@ -1,0 +1,29 @@
+SELECT a.pseudonim, g.nazwa_gatunku FROM artysci a LEFT JOIN gatunki g ON a.id_gatunku = g.id_gatunku;
+
+SELECT s.imie, s.kraj FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza WHERE o.data_odsluchu IS NULL;
+
+SELECT a.tytul_albumu, COUNT(o.id_odsluchu) FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu GROUP BY o.id_albumu;
+
+SELECT a.pseudonim, g.nazwa_gatunku FROM gatunki g RIGHT JOIN artysci a ON a.id_gatunku = g.id_gatunku;
+
+SELECT s.imie, a.tytul_albumu, ar.pseudonim FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza LEFT JOIN albumy a ON o.id_albumu = a.id_albumu LEFT JOIN artysci ar ON a.id_artysty = ar.id_artysty;
+
+SELECT a.pseudonim FROM artysci ar LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty WHERE a.id_albumu IS NULL;\
+
+SELECT a.tytul_albumu FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu WHERE o.id_odsluchu IS NULL;
+
+SELECT g.nazwa_gatunku, COUNT(a.id_artysty) AS liczba_artystow FROM gatunki g LEFT JOIN artysci ar ON g.id_gatunku = ar.id_gatunku GROUP BY g.id_gatunku;
+
+SELECT s.imie, s.kraj, al.tytul_albumu FROM sluchacze s LEFT JOIN Odsluchy o ON s.id_sluchacza = o.id_sluchacza LEFT JOIN albumy a ON o.id_albumu = a.id_albumu;
+
+SELECT ar.pseudonim, COUNT(o.id_odsluchu) AS liczba_odsluchow FROM artysci ar LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu GROUP BY ar.id_artysty;
+
+SELECT s.imie, s.kraj, a.tytul_albumu FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza LEFT JOIN albumy a ON o.id_albumu = a.id_albumu WHERE s.kraj = 'Polska';
+
+SELECT g.nazwa_gatunku, COUNT(o.id_odsluchu) AS liczba_odsluchow FROM gatunki g LEFT JOIN artysci ar ON g.id_gatunku = ar.id_gatunku LEFT JOIN albumy a ON a.id_artysty = a.id_artysty LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu GROUP BY g.id_gatunku;
+
+SELECT a.tytul_albumu, o.data_odsluchu FROM albumy a LEFT JOIN odsluchy o  ON a.id_albumu = o.id_albumu AND o.data_odsluchu <= '2023-10-05';
+
+SELECT a.tytul_albumu, s.imie FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu LEFT JOIN sluchacze s ON o.id_sluchacza = s.id_sluchacza;
+
+SELECT g.nazwa_gatunku, a.tytul_albumu FROM gatunki g LEFT JOIN artysci ar ON g.id_gatunku = ar.id_gatunku LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty;

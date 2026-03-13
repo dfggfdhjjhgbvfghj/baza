@@ -8,7 +8,7 @@ SELECT a.pseudonim, g.nazwa_gatunku FROM gatunki g RIGHT JOIN artysci a ON a.id_
 
 SELECT s.imie, a.tytul_albumu, ar.pseudonim FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza LEFT JOIN albumy a ON o.id_albumu = a.id_albumu LEFT JOIN artysci ar ON a.id_artysty = ar.id_artysty;
 
-SELECT a.pseudonim FROM artysci ar LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty WHERE a.id_albumu IS NULL;\
+SELECT a.pseudonim FROM artysci ar LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty WHERE a.id_albumu IS NULL;
 
 SELECT a.tytul_albumu FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu WHERE o.id_odsluchu IS NULL;
 
@@ -27,3 +27,16 @@ SELECT a.tytul_albumu, o.data_odsluchu FROM albumy a LEFT JOIN odsluchy o  ON a.
 SELECT a.tytul_albumu, s.imie FROM albumy a LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu LEFT JOIN sluchacze s ON o.id_sluchacza = s.id_sluchacza;
 
 SELECT g.nazwa_gatunku, a.tytul_albumu FROM gatunki g LEFT JOIN artysci ar ON g.id_gatunku = ar.id_gatunku LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty;
+
+SELECT s.imie, COUNT(o.id_odsluchu) FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza= o.id_sluchacza GROUP BY o.id_sluchacza;
+
+SELECT a.tytul_albumu, ar.pseudonim FROM artysci ar RIGHT JOIN albumy a ON ar.id_artysty = a.id_artysty;
+
+SELECT g.nazwa_gatunku, a.tytul_albumu FROM gatunki g LEFT JOIN artysci ar ON g.id_gatunku = ar.id_gatunku LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty WHERE a.tytul_albumu IS NULL;
+
+SELECT ar.pseudonim, COUNT(o.id_odsluchu) AS liczba_odsluchow FROM artysci ar LEFT JOIN albumy a ON ar.id_artysty = a.id_artysty LEFT JOIN odsluchy o ON a.id_albumu = o.id_albumu GROUP BY ar.id_artysty HAVING COUNT(o.id_odsluchu) = 0;
+
+SELECT s.kraj, COUNT(o.id_odsluchu) AS liczba_odsluchow FROM sluchacze s LEFT JOIN odsluchy o ON s.id_sluchacza = o.id_sluchacza GROUP BY s.kraj;
+
+SELECT a.tytul_albumu FROM odsluchy o RIGHT JOIN albumy a ON a.id_albumu = o.id_albumu WHERE o.id_odsluchu IS NULL;
+

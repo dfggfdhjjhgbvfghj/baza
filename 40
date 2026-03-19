@@ -1,0 +1,9 @@
+SELECT w.data_wypozyczenia, k.imie, k.nazwisko, s.marka, s.model FROM wypozyczenia w JOIN klienci k ON w.id_klienta = k.id_klienta JOIN samochody s ON w.id_samochodu = s.id_samochodu;
+
+SELECT k.imie, k.nazwisko, w.data_wypozyczenia FROM klienci k LEFT JOIN wypozyczenia w ON k.id_klienta = w.id_klienta;
+
+SELECT k.imie, k.nazwisko, k.telefon FROM klienci k LEFT JOIN wypozyczenia w ON w.id_klienta = w.id_klienta WHERE w.id_wypozyczenia IS NULL;
+
+SELECT s.marka, s.model, COUNT(w.id_wypozyczenia) AS liczba_wynajmow FROM samochody s LEFT JOIN wypozyczenia w ON s.id_samochodu = w.id_samochodu GROUP BY s.id_samochodu, s.marka, s.model;
+
+SELECT w.data_wypozyczenia, k.imie, k.nazwisko, s.marka, s.model FROM wypozyczenia w JOIN klienci k ON w.id_klienta = k.id_klienta JOIN samochody s ON w.id_samochodu = s.id_samochodu WHERE w.data_wypozyczenia LIKE '2023-11%' ORDER BY k.nazwisko ASC;

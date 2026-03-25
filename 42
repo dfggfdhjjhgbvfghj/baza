@@ -1,0 +1,21 @@
+SELECT ze.nazwa_zespolu, z.imie, z.nazwisko FROM Zespoly ze RIGHT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu;
+
+SELECT ze.nazwa_zespolu, z.imie, z.nazwisko FROM Zawodnicy z LEFT JOIN Zespoly ze ON ze.id_zespolu = z.id_zespolu;
+
+SELECT ze.nazwa_zespolu FROM Zawodnicy z RIGHT JOIN Zespoly ze ON z.id_zespolu = ze.id_zespolu WHERE z.id_zawodnika IS NULL;
+
+SELECT ze.nazwa_zespolu, COUNT(z.id_zawodnika) liczba_graczy FROM Zawodnicy z RIGHT JOIN Zespoly ze ON z.id_zespolu = ze.id_zespolu GROUP BY ze.id_zespolu, ze.nazwa_zespolu;
+
+SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze LEFT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu UNION SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze RIGHT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu;
+
+SELECT z.imie, z.nazwisko, COALESCE(ze.nazwa_zespolu, 'Brak zespołu') nazwa_zespolu FROM Zawodnicy z LEFT JOIN Zespoly ze ON z.id_zespolu = ze.id_zespolu;
+
+SELECT ze.nazwa_zespolu, COUNT(z.id_zawodnika) liczba_graczy FROM Zespoly ze INNER JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu GROUP BY ze.id_zespolu, ze.nazwa_zespolu;
+
+SELECT z.imie, z.nazwisko FROM Zawodnicy z LEFT JOIN Zespoly ze ON z.id_zespolu = ze.id_zespolu WHERE ze.id_zespolu IS NULL;
+
+SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze LEFT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu UNION SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze RIGHT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu WHERE ze.id_zespolu IS NULL;
+
+SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze LEFT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu UNION SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze RIGHT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu;
+
+SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze LEFT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu UNION ALL SELECT ze.id_zespolu, ze.nazwa_zespolu, z.id_zawodnika, z.nazwisko FROM Zespoly ze RIGHT JOIN Zawodnicy z ON ze.id_zespolu = z.id_zespolu;

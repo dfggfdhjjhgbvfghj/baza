@@ -1,0 +1,72 @@
+SELECT p.imie, p.nazwisko, d.nazwa_dzialu
+FROM Pracownicy p
+LEFT JOIN Dzialy d ON p.id_dzialu = d.id_dzialu;
+
+SELECT d.nazwa_dzialu, p.nazwisko
+FROM Dzialy d
+LEFT JOIN Pracownicy p ON d.id_dzialu = p.id_dzialu
+ORDER BY d.id_dzialu;
+
+SELECT p.imie, p.nazwisko, p.stanowisko
+FROM Pracownicy p
+JOIN Dzialy d ON p.id_dzialu = d.id_dzialu
+WHERE d.nazwa_dzialu = 'Frontend Development';
+
+SELECT imie, nazwisko
+FROM Pracownicy
+WHERE id_dzialu IS NULL;
+
+SELECT d.nazwa_dzialu
+FROM Dzialy d
+LEFT JOIN Pracownicy p ON d.id_dzialu = p.id_dzialu
+WHERE p.id_pracownika IS NULL;
+
+SELECT pr.nazwa_projektu, p.nazwisko AS kierownik
+FROM Projekty pr
+LEFT JOIN Pracownicy p ON pr.id_kierownika = p.id_pracownika;
+
+SELECT nazwa_projektu
+FROM Projekty
+WHERE id_kierownika IS NULL;
+
+SELECT p.imie, p.nazwisko, pr.nazwa_projektu
+FROM Pracownicy p
+LEFT JOIN Projekty pr ON p.id_pracownika = pr.id_kierownika
+ORDER BY p.id_pracownika;
+
+SELECT p.imie, p.nazwisko, pr.nazwa_projektu
+FROM Projekty pr
+JOIN Pracownicy p ON pr.id_kierownika = p.id_pracownika
+WHERE p.id_dzialu IS NULL;
+
+SELECT DISTINCT d.nazwa_dzialu
+FROM Dzialy d
+JOIN Pracownicy p ON d.id_dzialu = p.id_dzialu
+JOIN Projekty pr ON p.id_pracownika = pr.id_kierownika;
+
+SELECT d.nazwa_dzialu, COUNT(p.id_pracownika) AS liczba_pracownikow
+FROM Dzialy d
+LEFT JOIN Pracownicy p ON d.id_dzialu = p.id_dzialu
+GROUP BY d.id_dzialu;
+
+SELECT p.imie, p.nazwisko, COUNT(pr.id_projektu) AS liczba_projektow
+FROM Pracownicy p
+LEFT JOIN Projekty pr ON p.id_pracownika = pr.id_kierownika
+GROUP BY p.id_pracownika;
+
+SELECT p.imie, p.nazwisko
+FROM Pracownicy p
+LEFT JOIN Projekty pr ON p.id_pracownika = pr.id_kierownika
+WHERE pr.id_projektu IS NULL;
+
+SELECT pr.nazwa_projektu
+FROM Projekty pr
+JOIN Pracownicy p ON pr.id_kierownika = p.id_pracownika
+JOIN Dzialy d ON p.id_dzialu = d.id_dzialu
+WHERE d.nazwa_dzialu = 'Backend Development';
+
+
+SELECT d.nazwa_dzialu, pr.nazwa_projektu
+FROM Projekty pr
+JOIN Pracownicy p ON pr.id_kierownika = p.id_pracownika
+JOIN Dzialy d ON p.id_dzialu = d.id_dzialu;

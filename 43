@@ -1,0 +1,19 @@
+SELECT f.tytul, g.nazwa_gatunku FROM Filmy f INNER JOIN Gatunki g ON f.id_gatunku = g.id_gatunku;
+
+SELECT k.imie, k.nazwisko, b.data_seansu FROM Klienci k INNER JOIN Bilety b ON k.id_klienta = b.id_klienta;
+
+SELECT g.nazwa_gatunku, f.tytul FROM Gatunki g LEFT JOIN Filmy f ON g.id_gatunku = f.id_gatunku ORDER BY g.nazwa_gatunku;
+
+SELECT g.nazwa_gatunku FROM Gatunki g LEFT JOIN Filmy f ON g.id_gatunku = f.id_gatunku WHERE f.id_filmu IS NULL;
+
+SELECT k.imie, k.nazwisko, k.email, COALESCE(SUM(b.cena), 0) AS laczna_kwota FROM Klienci k LEFT JOIN Bilety b ON k.id_klienta = b.id_klienta GROUP BY k.id_klienta;
+
+SELECT f.tytul, COUNT(b.id_biletu) AS liczba_biletow FROM Filmy f LEFT JOIN Bilety b ON f.id_filmu = b.id_filmu GROUP BY f.id_filmu;
+
+SELECT f.tytul FROM Filmy f LEFT JOIN Bilety b ON f.id_filmu = b.id_filmu WHERE b.id_biletu IS NULL;
+
+SELECT b.id_biletu, f.tytul, g.nazwa_gatunku, b.cena, k.imie, k.nazwisko FROM Bilety b LEFT JOIN Filmy f ON b.id_filmu = f.id_filmu LEFT JOIN Gatunki g ON f.id_gatunku = g.id_gatunku LEFT JOIN Klienci k ON b.id_klienta = k.id_klienta ORDER BY b.id_biletu;
+
+SELECT DISTINCT k.imie, k.nazwisko FROM Klienci k INNER JOIN Bilety b ON k.id_klienta = b.id_klienta INNER JOIN Filmy f ON b.id_filmu = f.id_filmu WHERE f.tytul = 'Matrix';
+
+SELECT g.nazwa_gatunku, SUM(b.cena) AS laczna_sprzedaz FROM Gatunki g JOIN Filmy f ON g.id_gatunku = f.id_gatunku JOIN Bilety b ON f.id_filmu = b.id_filmu GROUP BY g.id_gatunku HAVING SUM(b.cena) > 100;

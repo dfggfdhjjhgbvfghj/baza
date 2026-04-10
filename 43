@@ -17,3 +17,11 @@ SELECT b.id_biletu, f.tytul, g.nazwa_gatunku, b.cena, k.imie, k.nazwisko FROM Bi
 SELECT DISTINCT k.imie, k.nazwisko FROM Klienci k INNER JOIN Bilety b ON k.id_klienta = b.id_klienta INNER JOIN Filmy f ON b.id_filmu = f.id_filmu WHERE f.tytul = 'Matrix';
 
 SELECT g.nazwa_gatunku, SUM(b.cena) AS laczna_sprzedaz FROM Gatunki g JOIN Filmy f ON g.id_gatunku = f.id_gatunku JOIN Bilety b ON f.id_filmu = b.id_filmu GROUP BY g.id_gatunku HAVING SUM(b.cena) > 100;
+
+SELECT k.imie, k.nazwisko FROM Klienci k LEFT JOIN Bilety b ON k.id_klienta = b.id_klienta WHERE b.id_biletu is NULL;
+
+SELECT g.nazwa_gatunku, f.tytul FROM Filmy f RIGHT JOIN Gatunki g  ON g.id_gatunku = f.id_gatunku ORDER BY g.nazwa_gatunku;
+
+SELECT f.tytul, k.rok_urodzenia FROM Filmy f JOIN Bilety b ON f.id_filmu = b.id_filmu JOIN Klienci k ON b.id_klienta = k.id_klienta WHERE rok_urodzenia < 1990;
+
+SELECT k.imie, k.nazwisko, COUNT(b.id_biletu) FROM Klienci k LEFT JOIN Bilety b ON k.id_klienta = b.id_klienta GROUP BY k.id_klienta HAVING COUNT(b.id_biletu) > 1;

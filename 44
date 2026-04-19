@@ -1,0 +1,19 @@
+SELECT imie, nazwisko, pensja FROM Pracownicy WHERE pensja < (SELECT AVG(pensja) FROM Pracownicy);
+
+SELECT imie, nazwisko, stanowisko FROM Pracownicy WHERE pensja = (SELECT MIN(pensja) FROM Pracownicy);
+
+SELECT * FROM Pracownicy WHERE data_zatrudnienia > (SELECT data_zatrudnienia FROM Pracownicy WHERE nazwisko = 'Dąbrowski');
+
+SELECT imie, nazwisko FROM Pracownicy WHERE stanowisko = (SELECT stanowisko FROM Pracownicy WHERE id_pracownika = 3) AND id_pracownika <> 3;
+
+SELECT * FROM Pracownicy WHERE pensja > (SELECT MAX(pensja) FROM Pracownicy WHERE stanowisko = 'Specjalista ds. Marketingu');
+
+SELECT imie, nazwisko FROM Pracownicy WHERE pensja = (SELECT pensja FROM Pracownicy WHERE nazwisko = 'Nowak');
+
+SELECT imie, nazwisko, data_zatrudnienia FROM Pracownicy WHERE pensja > (SELECT AVG(pensja) FROM Pracownicy) ORDER BY data_zatrudnienia ASC;
+
+SELECT * FROM Pracownicy WHERE data_zatrudnienia = (SELECT MIN(data_zatrudnienia) FROM Pracownicy);
+
+SELECT * FROM Pracownicy WHERE id_dzialu = (SELECT id_dzialu FROM Pracownicy WHERE id_pracownika = 10);
+
+SELECT imie, nazwisko, pensja FROM Pracownicy WHERE pensja < (SELECT MAX(pensja)/2 FROM Pracownicy);

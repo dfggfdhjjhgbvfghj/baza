@@ -1,0 +1,4 @@
+SELECT imie, nazwisko FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM Kursy WHERE jezyk = 'Niemiecki' );
+
+SELECT jezyk, poziom FROM kursy WHERE id_lektora_fk NOT IN ( SELECT id_lektora FROM lektorzy WHERE id_lektora = 1 );
+

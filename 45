@@ -2,3 +2,4 @@ SELECT imie, nazwisko FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk F
 
 SELECT jezyk, poziom FROM kursy WHERE id_lektora_fk NOT IN ( SELECT id_lektora FROM lektorzy WHERE id_lektora = 1 );
 
+SELECT cena_kursu, jezyk FROM kursy WHERE cena_kursu <= ALL ( SELECT cena_kursu FROM Kursy );

@@ -7,3 +7,15 @@ SELECT cena_kursu, jezyk FROM kursy WHERE cena_kursu <= ALL ( SELECT cena_kursu 
 SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa > ANY ( SELECT stawka_godzinowa FROM lektorzy JOIN Kursy ON id_lektora = id_lektora_fk WHERE jezyk = 'Angielski');
 
 SELECT DISTINCT jezyk FROM kursy WHERE jezyk NOT IN ( SELECT jezyk FROM kursy WHERE poziom = 'C1');
+
+SELECT jezyk, poziom, cena_kursu FROM kursy WHERE id_lektora_fk IN ( SELECT id_lektora FROM lektorzy WHERE stawka_godzinowa >= 95);
+
+SELECT imie, nazwisko FROM lektorzy WHERE id_lektora NOT IN ( SELECT id_lektora_fk FROM kursy WHERE jezyk = 'Angielski');
+
+SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa > ALL (SELECT stawka_godzinowa FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM kursy WHERE jezyk = 'Hiszpański'));
+
+SELECT imie, nazwisko FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM kursy WHERE poziom IN ('A1', 'A2'));
+
+SELECT jezyk, poziom FROM kursy WHERE id_lektora_fk NOT IN ( SELECT id_lektora FROM lektorzy WHERE stawka_godzinowa < 80);
+
+SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa < ANY ( SELECT stawka_godzinowa FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM kursy WHERE poziom = 'C1'));

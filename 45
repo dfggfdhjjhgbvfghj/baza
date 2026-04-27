@@ -19,3 +19,7 @@ SELECT imie, nazwisko FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk F
 SELECT jezyk, poziom FROM kursy WHERE id_lektora_fk NOT IN ( SELECT id_lektora FROM lektorzy WHERE stawka_godzinowa < 80);
 
 SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa < ANY ( SELECT stawka_godzinowa FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM kursy WHERE poziom = 'C1'));
+
+SELECT jezyk, poziom FROM kursy WHERE cena_kursu < ALL ( SELECT cena_kursu FROM kursy WHERE jezyk = 'Angielski');
+
+SELECT imie, nazwisko FROM lektorzy WHERE id_lektora NOT IN ( SELECT id_lektora_fk FROM kursy WHERE cena_kursu > 1500);

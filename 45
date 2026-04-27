@@ -22,4 +22,6 @@ SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa < ANY ( SELECT stawka
 
 SELECT jezyk, poziom FROM kursy WHERE cena_kursu < ALL ( SELECT cena_kursu FROM kursy WHERE jezyk = 'Angielski');
 
+SELECT DISTINCT jezyk FROM kursy WHERE id_lektora_fk IN ( SELECT id_lektora FROM lektorzy WHERE nazwisko = 'Nowak');
+
 SELECT imie, nazwisko FROM lektorzy WHERE id_lektora NOT IN ( SELECT id_lektora_fk FROM kursy WHERE cena_kursu > 1500);

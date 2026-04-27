@@ -4,7 +4,7 @@ SELECT jezyk, poziom FROM kursy WHERE id_lektora_fk NOT IN ( SELECT id_lektora F
 
 SELECT cena_kursu, jezyk FROM kursy WHERE cena_kursu <= ALL ( SELECT cena_kursu FROM Kursy );
 
-SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa > ANY ( SELECT stawka_godzinowa FROM lektorzy JOIN Kursy ON id_lektora = id_lektora_fk WHERE jezyk = 'Angielski');
+SELECT imie, nazwisko FROM lektorzy WHERE stawka_godzinowa > ANY ( SELECT stawka_godzinowa FROM lektorzy WHERE id_lektora IN ( SELECT id_lektora_fk FROM Kursy WHERE jezyk = 'Angielski'));
 
 SELECT DISTINCT jezyk FROM kursy WHERE jezyk NOT IN ( SELECT jezyk FROM kursy WHERE poziom = 'C1');
 

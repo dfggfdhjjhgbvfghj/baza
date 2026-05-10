@@ -1,0 +1,29 @@
+SELECT tytul, ocena_metacritic FROM Gry WHERE ocena_metacritic > (SELECT AVG(ocena_metacritic) FROM Gry);
+
+SELECT tytul, cena FROM Gry WHERE id_wydawcy IN (SELECT id_wydawcy FROM Wydawcy WHERE kraj IN ('USA','Francja'));
+
+SELECT nazwa FROM Wydawcy WHERE id_wydawcy NOT IN (SELECT id_wydawcy FROM Gry WHERE rok_wydania=2022);
+
+SELECT tytul, cena FROM Gry WHERE cena >= ALL (SELECT cena FROM Gry);
+
+SELECT tytul FROM Gry WHERE cena < ANY (SELECT cena FROM Gry WHERE rok_wydania=2017);
+
+SELECT tytul FROM Gry WHERE rok_wydania = (SELECT rok_wydania FROM Gry WHERE tytul='Cyberpunk 2077');
+
+SELECT DISTINCT nazwa FROM Wydawcy WHERE id_wydawcy IN (SELECT id_wydawcy FROM Gry WHERE ocena_metacritic>=90);
+
+SELECT tytul FROM Gry WHERE cena > (SELECT AVG(cena) FROM Gry WHERE id_wydawcy=1);
+
+SELECT nazwa FROM Wydawcy WHERE id_wydawcy NOT IN (SELECT DISTINCT id_wydawcy FROM Gry WHERE id_wydawcy IS NOT NULL);
+
+SELECT tytul, cena FROM Gry WHERE cena<150 AND id_wydawcy IN (SELECT id_wydawcy FROM Wydawcy WHERE kraj='Polska');
+
+SELECT DISTINCT nazwa FROM Wydawcy WHERE id_wydawcy = ANY (SELECT id_wydawcy FROM Gry WHERE cena>200);
+
+SELECT tytul FROM Gry WHERE cena < ALL (SELECT cena FROM Gry WHERE rok_wydania=2022);
+
+SELECT tytul FROM Gry WHERE ocena_metacritic <= ALL (SELECT ocena_metacritic FROM Gry);
+
+SELECT tytul, rok_wydania FROM Gry WHERE id_wydawcy IN (SELECT id_wydawcy FROM Wydawcy WHERE nazwa LIKE 'S%' OR nazwa LIKE 'C%');
+
+SELECT tytul FROM Gry WHERE cena > (SELECT AVG(cena) FROM Gry) AND id_wydawcy IN (SELECT id_wydawcy FROM Wydawcy WHERE kraj='Japonia');

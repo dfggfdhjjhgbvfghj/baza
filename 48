@@ -1,0 +1,69 @@
+SELECT p.nazwa_produktu, sprzedaz.laczna_ilosc
+FROM (
+    SELECT id_produktu, SUM(ilosc) laczna_ilosc
+    FROM SzczegolyZamowien
+    GROUP BY id_produktu
+) sprzedaz
+JOIN Produkty p ON p.id_produktu = sprzedaz.id_produktu
+ORDER BY sprzedaz.laczna_ilosc DESC;
+
+
+SELECT p.nazwa_produktu, przychody.przychod
+FROM (
+    SELECT sz.id_produktu,
+           SUM(sz.ilosc * pr.cena_jednostkowa) przychod
+    FROM SzczegolyZamowien sz
+    JOIN Produkty pr ON pr.id_produktu = sz.id_produktu
+    GROUP BY sz.id_produktu
+) przychody
+JOIN Produkty p ON p.id_produktu = przychody.id_produktu
+ORDER BY przychody.przychod DESC
+LIMIT 1;
+
+
+SELECT z.klient,
+       pod.liczba_zamowien,
+       pod.laczna_wartosc
+FROM (
+    SELECT z.klient,
+           COUNT(DISTINCT z.id_zamowienia) liczba_zamowien,
+           SUM(sz.ilosc * p.cena_jednostkowa) laczna_wartosc
+    FROM Zamowienia z
+    JOIN SzczegolyZamowien sz ON sz.id_zamowienia = z.id_zamowienia
+    JOIN Produkty p ON p.id_produktu = sz.id_produktu
+    GROUP BY z.klient
+)  pod
+JOIN Zamowienia z ON z.klient = pod.klient
+GROUP BY z.klient, pod.liczba_zamowien, pod.laczna_wartosc;
+
+
+SELECT k.nazwa_kategorii, srednie.srednia_cena
+FROM (
+    SELECT id_kategorii, AVG(cena_jednostkowa) srednia_cena
+    FROM Produkty
+    GROUP BY id_kategorii
+) srednie
+JOIN Kategorie k ON k.id_kategorii = srednie.id_kategorii
+WHERE srednie.srednia_cena > 500;
+
+
+SELECT k.nazwa_kategorii,
+       roznice.rozpietosc_cen
+FROM (
+    SELECT id_kategorii,
+           MAX(cena_jednostkowa) - MIN(cena_jednostkowa) rozpietosc_cen
+    FROM Produkty
+    GROUP BY id_kategorii
+) roznice
+JOIN Kategorie k ON k.id_kategorii = roznice.id_kategorii;
+
+SELECT z.id_zamowienia, wartosci.wartosc_zamowienia
+FROM (
+    SELECT sz.id_zamowienia,
+           SUM(sz.ilosc * p.cena_jednostkowa) wartosc_zamowienia
+    FROM SzczegolyZamowien sz
+    JOIN Produkty p ON p.id_produktu = sz.id_produktu
+    GROUP BY sz.id_zamowienia
+) wartosci
+JOIN Zamowienia z ON z.id_zamowienia = wartosci.id_zamowienia
+WHERE wartosci.wartosc_zamowienia > 2000;

@@ -1,0 +1,17 @@
+SELECT imie, nazwisko, pensja, (SELECT MIN(pensja) FROM Pracownicy) AS minimalna_pensja FROM Pracownicy; 
+
+SELECT imie, nazwisko, pensja, (SELECT MAX(pensja) FROM Pracownicy) AS maks_pensja FROM Pracownicy; 
+
+SELECT nazwa, (SELECT COUNT(*) FROM Pracownicy) AS liczba_pracownikow FROM Oddzialy;  
+
+SELECT p.imie, p.nazwisko, p.pensja, (SELECT AVG(p2.pensja) FROM Pracownicy p2 WHERE p2.id_oddzialu = p.id_oddzialu) AS srednia_w_oddziale FROM Pracownicy p;
+
+SELECT o.nazwa, o.miasto, (SELECT COUNT(*) FROM Pracownicy p WHERE p.id_oddzialu = o.id_oddzialu) AS liczba_pracownikow FROM Oddzialy o; 
+
+SELECT p.imie, p.nazwisko, p.pensja, p.pensja - (SELECT AVG(p2.pensja) FROM Pracownicy p2 WHERE p2.id_oddzialu = p.id_oddzialu) AS roznica_od_sredniej FROM Pracownicy p;  
+
+SELECT p.imie, p.nazwisko, p.pensja, CASE WHEN p.pensja > (SELECT AVG(p2.pensja) FROM Pracownicy p2 WHERE p2.id_oddzialu = p.id_oddzialu) THEN 'Powyżej średniej' ELSE 'Poniżej średniej' END AS ocena FROM Pracownicy p; 
+
+SELECT imie, nazwisko, pensja, ((SELECT AVG(pensja) FROM Pracownicy) - pensja) AS ile_brakuje FROM Pracownicy WHERE pensja < (SELECT AVG(pensja) FROM Pracownicy); 
+
+

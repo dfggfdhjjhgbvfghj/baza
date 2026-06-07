@@ -1,9 +1,19 @@
-SELECT miasto miejscowosc FROM Klienci UNION SELECT miasto miejscowosc FROM Dostawcy;
+SELECT miasto miejscowosc FROM klienci UNION SELECT miasto miejscowosc FROM dostawcy;
 
-SELECT imie, nazwisko, 'Klient' AS rola FROM Klienci UNION ALL SELECT imie, nazwisko, 'Dostawca' AS rola FROM Dostawcy;
+SELECT imie, nazwisko, 'Klient' AS rola FROM klienci UNION ALL SELECT imie, nazwisko, 'Dostawca' AS rola FROM dostawcy;
 
-SELECT imie, nazwisko FROM Klienci EXCEPT SELECT imie, nazwisko FROM Dostawcy;
+SELECT imie, nazwisko FROM klienci EXCEPT SELECT imie, nazwisko FROM dostawcy;
 
-SELECT miasto FROM Klienci INTERSECT SELECT miasto FROM Dostawcy;
+SELECT miasto FROM klienci INTERSECT SELECT miasto FROM dostawcy;
 
-SELECT imie, nazwisko, miasto FROM Klienci WHERE miasto = 'Warszawa' UNION SELECT imie, nazwisko, miasto FROM Dostawcy WHERE miasto = 'Kraków';
+SELECT imie, nazwisko, miasto FROM klienci WHERE miasto = 'Warszawa' UNION SELECT imie, nazwisko, miasto FROM dostawcy WHERE miasto = 'Kraków';
+
+SELECT DISTINCT imie FROM (SELECT imie FROM klienci UNION ALL SELECT imie FROM dostawcy) AS p ORDER BY imie ASC;
+
+SELECT miasto FROM dostawcy EXCEPT SELECT miasto FROM klienci;
+
+SELECT imie, nazwisko, miasto, 'Klient' AS rola FROM klienci WHERE miasto = 'Warszawa' UNION ALL SELECT imie, nazwisko, miasto, 'Dostawca' AS rola FROM dostawcy WHERE miasto = 'Warszawa';
+
+SELECT imie FROM klienci INTERSECT SELECT imie FROM dostawcy;
+
+SELECT imie, nazwisko, 'Klient' AS rola FROM klienci UNION ALL SELECT imie, nazwisko, 'Dostawca' AS rola FROM dostawcy ORDER BY nazwisko ASC LIMIT 5;

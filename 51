@@ -1,0 +1,6 @@
+CREATE VIEW UczniowieZKlasy1A AS SELECT id_ucznia, imie, nazwisko FROM Uczniowie WHERE klasa = '1A';
+
+SELECT * FROM UczniowieZKlasy1A GROUP BY nazwisko ASC;
+
+CREATE VIEW SrednieOcenyUczniow AS SELECT u.imie, u.nazwisko, AVG((SELECT ocena FROM oceny GROUP BY id_ucznia)) srednia FROM Oceny AS o INNER JOIN Uczniowie AS u ON o.id_ucznia = u.id_ucznia INNER JOIN Przedmioty AS p ON o.id_przedmiotu = p.id_przedmiotu;
+

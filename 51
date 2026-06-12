@@ -4,3 +4,18 @@ SELECT * FROM UczniowieZKlasy1A GROUP BY nazwisko ASC;
 
 CREATE VIEW SrednieOcenyUczniow AS SELECT u.imie, u.nazwisko, AVG((SELECT ocena FROM oceny GROUP BY id_ucznia)) srednia FROM Oceny AS o INNER JOIN Uczniowie AS u ON o.id_ucznia = u.id_ucznia INNER JOIN Przedmioty AS p ON o.id_przedmiotu = p.id_przedmiotu;
 
+SELECT srednia FROM SrednieOcenyUczniow WHERE srednia > 4.5;
+
+DROP VIEW UczniowieZKlasy1A;
+
+CREATE VIEW RaportOcen AS SELECT imie, nazwisko, klasa FROM Uczniowe;
+
+CREATE VIEW OcenyZInformatyki AS SELECT R.imie, R.nazwisko, O.ocena FROM RaportOcen R JOIN Oceny O ON R.id_ucznia = O.id_ucznia WHERE O.id_przedmiotu = '2';
+
+CREATE VIEW NajlepszeOceny AS SELECT id_ucnia, id_przedmiotu, ocena FROM Oceny WHERE ocena IN ('5','6');
+
+SELECT SUMA(ocena) AS liczba_ocen FROM RaportOcen GROUP BY id_przedmiotu DESC;
+
+CREATE VIEW PodsumowanieKlas u.klasa, SUMA(u.id_ucznia) liczba_uczniow, AVG(o.ocena) srednia_klasy FROM Uczniowe u JOIN Oceny o ON u.id_ucznia = o.id_ucznia GROUP BY u.id_ucznia;
+
+SELECT 

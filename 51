@@ -24,6 +24,7 @@ DROP VIEW SrednieOcenUcznioe;
 CREATE VIEW SrednieOcenyUczniow AS SELECT u.id_ucznia, u.imie, u.nazwisko, AVG((SELECT ocena FROM oceny GROUP BY id_ucznia)) srednia FROM Oceny AS o INNER JOIN Uczniowie AS u ON o.id_ucznia = u.id_ucznia INNER JOIN Przedmioty AS p ON o.id_przedmiotu = p.id_przedmiotu;
 SELECT u.imie, u.nazwisko, u.klasa, SOU.srednia FROM Uczniowe u JOIN SrednieOcenyUczniow SOU ON u.id_ucznia = SOU.id_ucznia;
 
-SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '1' UNION SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '2';
+CREATE VIEW UczniowieBezOcen AS SELECT imie, nazwisko FROM Uczniowe u LEFT JOIN Oceny o ON u.id_ucznia = 0.id_ucznia WHERE o.ocena is NULL;
 
+SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '1' UNION SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '2';
 

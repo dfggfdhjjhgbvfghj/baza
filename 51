@@ -28,3 +28,9 @@ CREATE VIEW UczniowieBezOcen AS SELECT imie, nazwisko FROM Uczniowe u LEFT JOIN 
 
 SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '1' UNION SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '2';
 
+DROP VIEW IF EXISTS RaportOcen;
+DROP TABLE IF EXISTS UczniowieBezOcen;
+DROP TABLE IF EXISTS PodsumowanieKlas;
+DROP TABLE IF EXISTS NajlepszeOceny;
+DROP TABLE IF EXISTS OcenyZInformatyki;
+DROP TABLE IF EXISTS SrednieOcenyUczniow;

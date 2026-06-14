@@ -1,36 +1,36 @@
-CREATE VIEW UczniowieZKlasy1A AS SELECT id_ucznia, imie, nazwisko FROM Uczniowie WHERE klasa = '1A';
+CREATE VIEW UczniowieZKlasy1A AS SELECT imie,nazwisko FROM Uczniowie WHERE klasa='1A';
 
-SELECT * FROM UczniowieZKlasy1A GROUP BY nazwisko ASC;
+SELECT * FROM UczniowieZKlasy1A ORDER BY nazwisko ASC;
 
-CREATE VIEW SrednieOcenyUczniow AS SELECT u.imie, u.nazwisko, AVG((SELECT ocena FROM oceny GROUP BY id_ucznia)) srednia FROM Oceny AS o INNER JOIN Uczniowie AS u ON o.id_ucznia = u.id_ucznia INNER JOIN Przedmioty AS p ON o.id_przedmiotu = p.id_przedmiotu;
+CREATE VIEW SrednieOcenyUczniow AS SELECT u.id_ucznia,u.imie,u.nazwisko,AVG(o.ocena) AS srednia FROM Oceny o JOIN Uczniowie u ON o.id_ucznia=u.id_ucznia GROUP BY u.id_ucznia,u.imie,u.nazwisko;
 
-SELECT srednia FROM SrednieOcenyUczniow WHERE srednia > 4.5;
+SELECT * FROM SrednieOcenyUczniow WHERE srednia>4.5;
 
-DROP VIEW UczniowieZKlasy1A;
+DROP VIEW IF EXISTS UczniowieZKlasy1A;
 
-CREATE VIEW RaportOcen AS SELECT imie, nazwisko, klasa FROM Uczniowe;
+CREATE VIEW RaportOcen AS SELECT o.id_oceny,u.id_ucznia,p.id_przedmiotu,u.imie,u.nazwisko,u.klasa,p.nazwa AS przedmiot,o.ocena FROM Oceny o JOIN Uczniowie u ON o.id_ucznia=u.id_ucznia JOIN Przedmioty p ON o.id_przedmiotu=p.id_przedmiotu;
 
-CREATE VIEW OcenyZInformatyki AS SELECT R.imie, R.nazwisko, O.ocena FROM RaportOcen R JOIN Oceny O ON R.id_ucznia = O.id_ucznia WHERE O.id_przedmiotu = '2';
+INSERT INTO Uczniowie(imie,nazwisko,klasa,dane_wrazliwe_haslo) VALUES('Piotr','Wiśniewski','2B','pass456'); SELECT * FROM RaportOcen;
 
-CREATE VIEW NajlepszeOceny AS SELECT id_ucnia, id_przedmiotu, ocena FROM Oceny WHERE ocena IN ('5','6');
+CREATE VIEW OcenyZInformatyki AS SELECT imie,nazwisko,ocena FROM RaportOcen WHERE przedmiot='Informatyka';
 
-SELECT SUMA(ocena) AS liczba_ocen FROM RaportOcen GROUP BY id_przedmiotu DESC;
+CREATE VIEW NajlepszeOceny AS SELECT id_ucznia,id_przedmiotu,ocena FROM Oceny WHERE ocena IN(5,6);
 
-CREATE VIEW PodsumowanieKlas u.klasa, SUMA(u.id_ucznia) liczba_uczniow, AVG(o.ocena) srednia_klasy FROM Uczniowe u JOIN Oceny o ON u.id_ucznia = o.id_ucznia GROUP BY u.id_ucznia;
+SELECT przedmiot,COUNT(*) AS liczba_ocen FROM RaportOcen GROUP BY przedmiot ORDER BY liczba_ocen DESC;
 
-(11)
+CREATE VIEW PodsumowanieKlas AS SELECT u.klasa,COUNT(DISTINCT u.id_ucznia) AS liczba_uczniow,AVG(o.ocena) AS srednia_klasy FROM Uczniowie u JOIN Oceny o ON u.id_ucznia=o.id_ucznia GROUP BY u.klasa;
 
-DROP VIEW SrednieOcenUcznioe;
-CREATE VIEW SrednieOcenyUczniow AS SELECT u.id_ucznia, u.imie, u.nazwisko, AVG((SELECT ocena FROM oceny GROUP BY id_ucznia)) srednia FROM Oceny AS o INNER JOIN Uczniowie AS u ON o.id_ucznia = u.id_ucznia INNER JOIN Przedmioty AS p ON o.id_przedmiotu = p.id_przedmiotu;
-SELECT u.imie, u.nazwisko, u.klasa, SOU.srednia FROM Uczniowe u JOIN SrednieOcenyUczniow SOU ON u.id_ucznia = SOU.id_ucznia;
+INSERT INTO Przedmioty(nazwa) VALUES('Język angielski'); SELECT * FROM RaportOcen;
 
-CREATE VIEW UczniowieBezOcen AS SELECT imie, nazwisko FROM Uczniowe u LEFT JOIN Oceny o ON u.id_ucznia = 0.id_ucznia WHERE o.ocena is NULL;
+CREATE VIEW SrednieOcenyUczniow AS SELECT u.id_ucznia,u.imie,u.nazwisko,AVG(o.ocena) AS srednia FROM Oceny o JOIN Uczniowie u ON o.id_ucznia=u.id_ucznia GROUP BY u.id_ucznia,u.imie,u.nazwisko; SELECT u.imie,u.nazwisko,u.klasa,s.srednia FROM Uczniowie u JOIN SrednieOcenyUczniow s ON u.id_ucznia=s.id_ucznia;
 
-SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '1' UNION SELECT id_ucznia FROM RaportOcen WHERE id_przedmiotu = '2';
+CREATE VIEW UczniowieBezOcen AS SELECT u.imie,u.nazwisko FROM Uczniowie u LEFT JOIN Oceny o ON u.id_ucznia=o.id_ucznia WHERE o.id_oceny IS NULL;
+
+SELECT DISTINCT r1.imie,r1.nazwisko,r1.klasa FROM RaportOcen r1 JOIN RaportOcen r2 ON r1.id_ucznia=r2.id_ucznia WHERE r1.przedmiot='Matematyka' AND r2.przedmiot='Informatyka';
 
 DROP VIEW IF EXISTS RaportOcen;
-DROP TABLE IF EXISTS UczniowieBezOcen;
-DROP TABLE IF EXISTS PodsumowanieKlas;
-DROP TABLE IF EXISTS NajlepszeOceny;
-DROP TABLE IF EXISTS OcenyZInformatyki;
-DROP TABLE IF EXISTS SrednieOcenyUczniow;
+DROP VIEW IF EXISTS SrednieOcenyUczniow;
+DROP VIEW IF EXISTS OcenyZInformatyki;
+DROP VIEW IF EXISTS NajlepszeOceny;
+DROP VIEW IF EXISTS PodsumowanieKlas;
+DROP VIEW IF EXISTS UczniowieBezOcen;
